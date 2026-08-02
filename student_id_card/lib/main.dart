@@ -1,89 +1,126 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const StudentIdApp());
+  runApp(const MyApp());
 }
 
-class StudentIdApp extends StatelessWidget {
-  const StudentIdApp({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Student ID Card',
-      home: Scaffold(
-        backgroundColor: const Color(0xFFEBF2FF),
-        appBar: AppBar(
-          title: const Text(
-            'Student ID Card',
-            style: TextStyle(color: Colors.white),
-          ),
-          backgroundColor: const Color(0xFF1E65DF),
-          elevation: 0,
+      title: 'Flutter Profile App',
+      home: HomeScreen(),
+    );
+  }
+}
+
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  bool _isFollowing = false;
+
+  void _toggleFollow() {
+    setState(() {
+      _isFollowing = !_isFollowing;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: const Color(0xFFF4F6F9),
+      appBar: AppBar(
+        title: Text(
+          _isFollowing ? 'Following Profile' : 'Flutter Profile',
+          style: const TextStyle(color: Colors.white),
         ),
-        body: Center(
-          child: Container(
-            width: 280,
-            padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(16),
-              border: Border.all(
-                color: const Color(0xFF1E65DF),
-                width: 1.5,
+        backgroundColor: _isFollowing ? Colors.teal : Colors.blue,
+        elevation: 0,
+      ),
+      body: Center(
+        child: Container(
+          width: 300,
+          padding: const EdgeInsets.all(24),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(16),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.08),
+                blurRadius: 10,
+                offset: const Offset(0, 4),
               ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.05),
-                  blurRadius: 10,
-                  offset: const Offset(0, 4),
+            ],
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const CircleAvatar(
+                radius: 45,
+                backgroundColor: Color(0xFFE0E0E0),
+                child: Icon(
+                  Icons.person,
+                  size: 50,
+                  color: Colors.grey,
                 ),
-              ],
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(20),
-                  decoration: const BoxDecoration(
-                    color: Color(0xFFD4E3FF),
-                    shape: BoxShape.circle,
+              ),
+              const SizedBox(height: 16),
+              const Text(
+                'Nandini Sharma',
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black87,
+                ),
+              ),
+              const SizedBox(height: 6),
+              const Text(
+                'Software Engineer',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.grey,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              const SizedBox(height: 6),
+              const Text(
+                'nandini@example.com',
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.black54,
+                ),
+              ),
+              const SizedBox(height: 24),
+              ElevatedButton(
+                onPressed: _toggleFollow,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: _isFollowing ? Colors.teal : Colors.blue,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 32,
+                    vertical: 12,
                   ),
-                  child: const Icon(
-                    Icons.person,
-                    size: 60,
-                    color: Color(0xFF1E65DF),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
                   ),
                 ),
-                const SizedBox(height: 20),
-                const Text(
-                  'Nandini Sharma',
-                  style: TextStyle(
-                    fontSize: 22,
+                child: Text(
+                  _isFollowing ? 'Following' : 'Follow',
+                  style: const TextStyle(
+                    fontSize: 16,
+                    color: Colors.white,
                     fontWeight: FontWeight.bold,
-                    color: Colors.black,
                   ),
                 ),
-                const SizedBox(height: 8),
-                const Text(
-                  'B.Tech CSE',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Color(0xFF1E65DF),
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                const SizedBox(height: 12),
-                const Text(
-                  'Roll No: 29',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.black87,
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
